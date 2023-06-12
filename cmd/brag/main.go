@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"strconv"
-	"time"
 
 	"github.com/BrunoPansani/brag/internal/brag"
 )
@@ -31,8 +30,7 @@ func main() {
 			os.Exit(1)
 		}
 		entryText := args[1]
-		eventDate := parseEventDateFlag()
-		err := addEntry(entryText, eventDate)
+		err := addEntry(entryText)
 		if err != nil {
 			fmt.Println("Error adding entry:", err)
 			os.Exit(1)
@@ -83,22 +81,22 @@ func printUsage() {
 	fmt.Println("Usage: brag <command> [arguments]")
 	fmt.Println()
 	fmt.Println("Available commands:")
-	fmt.Println("  init                  Initialize the brag document")
-	fmt.Println("  add <entry> [-d Y-m-d]  Add a new entry to the brag document")
-	fmt.Println("  list                  List all entries in the brag document")
-	fmt.Println("  remove <id>           Remove the entry with the specified ID")
-	fmt.Println("  clear                 Clear all entries from the brag document")
-	fmt.Println("  export <format>       Export the brag document to the specified format (txt, csv, json)")
-	fmt.Println("  help                  Display help information")
+	fmt.Println("  init                 Initialize the brag document")
+	fmt.Println("  add <entry> 			Add a new entry to the brag document")
+	fmt.Println("  list                 List all entries in the brag document")
+	fmt.Println("  remove <id>          Remove the entry with the specified ID")
+	fmt.Println("  clear                Clear all entries from the brag document")
+	fmt.Println("  export <format>      Export the brag document to the specified format (txt, csv, json)")
+	fmt.Println("  help                 Display help information")
 }
 
 func initBragDocument() {
-	// Implement initialization logic here
 	fmt.Println("Initializing the brag document...")
+	brag.InitBragDocument()
 }
 
-func addEntry(entryText string, eventDate time.Time) error {
-	return brag.AddEntry(entryText, eventDate)
+func addEntry(entryText string) error {
+	return brag.AddEntry(entryText)
 }
 
 func listEntries() {
@@ -115,21 +113,4 @@ func clearEntries() error {
 
 func exportEntries(format string) {
 	brag.ExportEntries(format)
-}
-
-func parseEventDateFlag() time.Time {
-	dateFlag := flag.String("d", "", "Event date (Y-m-d)")
-	flag.Parse()
-
-	eventDate := time.Time{}
-	if *dateFlag != "" {
-		parsedDate, err := time.Parse("2006-01-02", *dateFlag)
-		if err == nil {
-			eventDate = parsedDate
-		} else {
-			fmt.Println("Invalid event date format. Using current date instead.")
-		}
-	}
-
-	return eventDate
 }
