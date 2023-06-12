@@ -97,10 +97,19 @@ func InitBragDocument() error {
 	}
 
 	file, err := os.Create(bragDocumentPath)
-	fmt.Fprintln(file, "{}")
 
 	if err != nil {
 		fmt.Println("Error creating brag document:", err)
+		return err
+	}
+
+	brag := &BragDocument{
+		Entries: []Entry{},
+	}
+
+	err = writeBragDocument(brag)
+	if err != nil {
+		fmt.Println("Error writing to brag document:", err)
 		return err
 	}
 	defer file.Close()
@@ -177,7 +186,7 @@ func ListEntries() {
 	}
 
 	for _, entry := range brag.Entries {
-		fmt.Printf("[%d - %s] %s\n", entry.ID, entry.Timestamp, entry.Text)
+		fmt.Printf("#%d [%s] %s\n", entry.ID, entry.Timestamp.Format("2006-01-02 15:04:05"), entry.Text)
 	}
 }
 
@@ -217,7 +226,7 @@ func exportToTXT(brag *BragDocument) {
 	writer := bufio.NewWriter(file)
 
 	for _, entry := range brag.Entries {
-		fmt.Fprintf(writer, "[%d - %s] %s\n", entry.ID, entry.Timestamp, entry.Text)
+		fmt.Fprintf(writer, "#%d [%s] %s\n", entry.ID, entry.Timestamp.Format("2006-01-02 15:04:05"), entry.Text)
 	}
 
 	writer.Flush()
@@ -239,7 +248,7 @@ func exportToCSV(brag *BragDocument) {
 	fmt.Fprintln(writer, "ID,Timestamp,Text")
 
 	for _, entry := range brag.Entries {
-		fmt.Fprintf(writer, "%d,%s,%s\n", entry.ID, entry.Timestamp, entry.Text)
+		fmt.Fprintf(writer, "%d,%s,%s\n", entry.ID, entry.Timestamp.Format("2006-01-02 15:04:05"), entry.Text)
 	}
 
 	writer.Flush()
