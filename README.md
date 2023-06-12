@@ -1,4 +1,4 @@
-# brag
+# Brag
 
 ## Description
 
