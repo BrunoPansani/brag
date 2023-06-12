@@ -9,11 +9,13 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Entry struct {
-	ID   int    `json:"id"`
-	Text string `json:"text"`
+	ID        int    `json:"id"`
+	Text      string `json:"text"`
+	Timestamp string `json:"timestamp"`
 }
 
 type Brag struct {
@@ -68,6 +70,8 @@ func initBragDocument() {
 	}
 
 	file, err := os.Create(bragFilePath)
+	fmt.Fprintln(file, "{}")
+
 	if err != nil {
 		fmt.Println("Error creating brag document:", err)
 		return
@@ -90,6 +94,8 @@ func addEntry() {
 		ID:   len(brag.Entries) + 1,
 		Text: text,
 	}
+
+	entry.Timestamp = time.Now().Format("2006-01-02 15:04:05")
 
 	brag.Entries = append(brag.Entries, entry)
 
@@ -115,7 +121,7 @@ func listEntries() {
 	}
 
 	for _, entry := range brag.Entries {
-		fmt.Printf("[%d] %s\n", entry.ID, entry.Text)
+		fmt.Printf("[%d - %s] %s\n", entry.ID, entry.Timestamp, entry.Text)
 	}
 }
 
@@ -216,7 +222,7 @@ func exportToTXT(brag Brag) {
 	writer := bufio.NewWriter(file)
 
 	for _, entry := range brag.Entries {
-		fmt.Fprintf(writer, "[%d] %s\n", entry.ID, entry.Text)
+		fmt.Fprintf(writer, "[%d - %s] %s\n", entry.ID, entry.Timestamp, entry.Text)
 	}
 
 	writer.Flush()
@@ -234,10 +240,10 @@ func exportToCSV(brag Brag) {
 
 	writer := bufio.NewWriter(file)
 
-	fmt.Fprintln(writer, "ID,Text")
+	fmt.Fprintln(writer, "ID,Timestamp,Text")
 
 	for _, entry := range brag.Entries {
-		fmt.Fprintf(writer, "%d,%s\n", entry.ID, entry.Text)
+		fmt.Fprintf(writer, "%d,%s,%s\n", entry.ID, entry.Timestamp, entry.Text)
 	}
 
 	writer.Flush()
