@@ -9,7 +9,7 @@ Brag is a command-line interface (CLI) tool that allows you to write and manage 
 1. Make sure you have Go installed on your system. You can download it from the official Go website: https://golang.org/
 
 2. Clone the brag repository to your local machine:
-`git clone [https://github.com/BrunoPansani/brag.git](https://github.com/BrunoPansani/brag.git)`
+`git clone https://github.com/BrunoPansani/brag.git`
 
 3. Navigate to the project directory:
 `cd brag`
