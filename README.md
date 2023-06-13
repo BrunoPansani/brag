@@ -18,12 +18,12 @@ Brag is a command-line interface (CLI) tool that allows you to write and manage 
 `go build ./cmd/brag`
 
 5. (Optional) Add the `brag` executable to your system's PATH to run it from anywhere.
-  1. In the terminal, run `pwd` to get the current directory.
-  2. Use a text editor to open your shell configuration file. For macOS, it is typically `~/.bash_profile` or `~/.zshrc`. For Linux, it can be `~/.bashrc` or `~/.zshrc`.
-  3. Add the following line to the configuration file, replacing `/path/to/brag` with the actual path to the brag executable:
+   1. In the terminal, run `pwd` to get the current directory.
+   2. Use a text editor to open your shell configuration file. For macOS, it is typically `~/.bash_profile` or `~/.zshrc`. For Linux, it can be `~/.bashrc` or `~/.zshrc`.
+   3. Add the following line to the configuration file, replacing `/path/to/brag` with the actual path to the brag executable:
 `export PATH="/path/to/brag:$PATH"`
-  4. Run `source ~/.bash_profile` (or the relevant configuration file) to apply the changes to the current session. Alternatively, you can close and reopen the terminal window.
-  5. Type brag in the terminal to verify that the command is recognized and executable from anywhere.
+   4. Run `source ~/.bash_profile` (or the relevant configuration file) to apply the changes to the current session. Alternatively, you can close and reopen the terminal window.
+   5. Type brag in the terminal to verify that the command is recognized and executable from anywhere.
 
 ## Usage
 
